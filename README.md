@@ -12,12 +12,12 @@ Database models were created according to the logic indicated in the below diagr
 
 (Folder **models**)
 
-- `BookModel`
-- `AuthorModel`
-- `WorkModel`
-- `BooksAuthors`
-- `BooksWorks`
-- `UserModel`
+- `book`
+- `author`
+- `work`
+- `book_author`
+- `book_work`
+- `user`
 
 As indicated from openlibrary data,
 
@@ -35,9 +35,26 @@ User authentication implemented with [`flask-jwt-extended`](https://flask-jwt-ex
 
 ## Data transfer validation/(de)serialization
 
-Implemented with 
+Implemented with [`marshmallow`](https://marshmallow.readthedocs.io/en/stable/)
+
+(Folder **schemas**)
+
+- `book`
+- `author`
+- `work`
+- `book_author`
+- `book_work`
+- `user`
 
 ## Endpoints
+
+(Folder **resources**)
+
+- `olib_book`
+- `book`
+- `author`
+- `work`
+- `user`
 
 ### Books
 
