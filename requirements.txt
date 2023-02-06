@@ -1,0 +1,16 @@
+requests==2.28.2
+flask==2.2.2
+flask-smorest==0.40.0
+######## ENV vars ########
+python-dotenv
+######## ORM ########
+sqlalchemy==2.0.1
+flask-sqlalchemy==3.0.3
+######## For Authentication ########
+flask-jwt-extended==4.4.4
+passlib==1.7.1
+######## For Database ########
+# flask-migrate
+# psycopg2
+######## For server ########
+# gunicorn
