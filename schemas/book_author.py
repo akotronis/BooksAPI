@@ -1,6 +1,6 @@
-from marshmallow import Schema, fields
+from marshmallow import fields
+from schemas import PlainBookSchema
 
 
-class BookAndAuthorSchema(Schema):
-    book = fields.Nested('BookSchema')
-    author = fields.Nested('AuthorSchema')
+class BookAndAuthorSchema(PlainBookSchema):
+    authors = fields.List(fields.Nested('PlainAuthorSchema'), dump_only=True)
