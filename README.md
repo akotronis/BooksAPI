@@ -56,6 +56,10 @@ Implemented with [`marshmallow`](https://marshmallow.readthedocs.io/en/stable/)
 - `work`
 - `user`
 
+In openlib there are books without registered _authors_, which suggests that _authors_ should be handled by separate endpoints, decoupled from _book_ endpoints implementation.
+
+So the endpoints are the below:
+
 ### Books
 
 - `/olib-books` &rarr; **GET**
