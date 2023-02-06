@@ -1,5 +1,4 @@
 from sqlite3 import IntegrityError
-from venv import create
 from flask.views import MethodView
 from flask_jwt_extended import create_access_token, get_jwt, jwt_required
 from flask_smorest import Blueprint, abort
