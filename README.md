@@ -113,8 +113,8 @@ Make `.env` file as in `.env.example`
 With Docker (Desktop) installed, on the folder where `Dockerfile` is:
 
 - `>>> docker build -t books-api-image .`
-- `>>> docker run --name books-api-container -p 5000:5000 -w /app -v ${PWD}:/app books-api-image` (Powershell) OR
-- `>>> docker run --name books-api-container -p 5000:5000 -w /app -v "%cd%":/app books-api-image` (Terminal)
+- `>>> docker run --rm -it --name books-api-container -p 5000:5000 -w /app -v ${PWD}:/app books-api-image` (Powershell) OR
+- `>>> docker run --rm -it --name books-api-container -p 5000:5000 -w /app -v "%cd%":/app books-api-image` (Terminal)
 
 # TODO
 
