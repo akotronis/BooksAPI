@@ -1,7 +1,7 @@
 Dockerfile
 **/__pycache__
+**/venv
 **/db.sqlite3
-*.db
-*.md
-*.env.example
-*venv
+**/*.db
+**/*.md
+.env.example

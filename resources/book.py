@@ -85,8 +85,7 @@ class BookList(MethodView):
 
 @blp.route("/<int:book_id>/authors/<int:author_id>")
 class LinkBookToAuthor(MethodView):
-    '''- (Link a book to an author) Add a row to "books_authors" table
-       - (Unlink book from an author) Delete a row from "books_authors" table
+    '''(Link a book to an author) Add a row to "books_authors" table
     '''
 
     # @jwt_required()
@@ -109,8 +108,7 @@ class LinkBookToAuthor(MethodView):
 
 @blp.route("/<int:book_id>/works/<int:work_id>")
 class LinkBookToWork(MethodView):
-    '''- (Link a book to a work) Add a row to "books_works" table
-       - (Unlink book from a work) Delete a row from "books_works" table
+    '''(Link a book to a work) Add a row to "books_works" table
     '''
     
     # @jwt_required()
