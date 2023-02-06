@@ -114,6 +114,7 @@ With Docker (Desktop) installed, on the folder where `Dockerfile` is:
 # TODO
 
 - Implement versioning with Blueprints
+- Documentation with `flask-smorest/swagger`
 - Use `flask-migrate` for migrations
 - Use `gunicorn` as a server
 - Unit testing
