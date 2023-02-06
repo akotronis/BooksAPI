@@ -34,6 +34,8 @@ def create_app(config_name):
     # Connect jwt to the app
     jwt = JWTManager(app)
 
+    ################### JWT CONFIGURATION ###################
+
     # Check if token is in blocklist (=Used tokens, from logged out users). Runs when token is CREATED
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
@@ -47,7 +49,7 @@ def create_app(config_name):
             401
         )
 
-    # Defines the message the use gets back when token is in blocklist
+    # Defines the message the use gets back when token is in blocklist because needs a fresh one
     @jwt.needs_fresh_token_loader
     def token_non_fresh_callback(jwt_header, jwt_payload):
         return (

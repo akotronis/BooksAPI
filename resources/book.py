@@ -58,7 +58,7 @@ class Book(MethodView):
 @blp.route("/")
 class BookList(MethodView):
     
-    # @jwt_required()
+    @jwt_required()
     @blp.arguments(QueryBookSchema, location='query')
     @blp.response(200, BookSchema(many=True))
     def get(self, query_args):
