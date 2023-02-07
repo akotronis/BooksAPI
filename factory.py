@@ -86,6 +86,7 @@ def create_app(config_name):
             401
         )
 
+    # Not needed with Flask-Migrate
     with app.app_context():
         # Create tables IF NOT EXIST
         db.create_all() 
