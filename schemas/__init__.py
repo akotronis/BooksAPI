@@ -1,4 +1,5 @@
 # So that we can do from models import ... instead of from schemas.book import ...
+from schemas.olib_book import QueryOlibBookSchema
 from schemas.book import PlainBookSchema, QueryBookSchema, BookSchema, UpdateBookSchema
 from schemas.author import PlainAuthorSchema, AuthorSchema, UpdateAuthorSchema
 from schemas.work import PlainWorkSchema, WorkSchema, UpdateWorkSchema

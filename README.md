@@ -63,7 +63,8 @@ So the endpoints are the below:
 ### Books
 
 - `/olib-books` &rarr; **GET**
-  - Fetch book codes defined in `book_codes.py` from open-library, extracts info, cleans tables and populates database
+  - Fetch book codes defined in `book_codes.py` from open-library, extracts info, clean tables and populate database
+  - Accepts query `asynchronously=<bool>` based on which the get requests to open library are performed _sequentially_ (`asynchronously=False`) or _concurrently_ (`asynchronously=False`) using `requests` module in combination with `asyncio`. Second option is **significantly faster**.
 - `/books/<book_id>` &rarr; **GET, PUT, DELETE** a book with a specific `book_id`
 - `/books` &rarr; **POST**
   - Create a book with `{'code': <book_code_str>, 'title': <book_title_str>}`
