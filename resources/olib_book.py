@@ -8,15 +8,15 @@ from populate import FeedDB
 from schemas import QueryOlibBookSchema
 
 
-blp = Blueprint("Openlib_book_routes", __name__, url_prefix='/olib-books')
+blp_v1 = Blueprint("Openlib-books-v1", __name__)
 
 # @jwt_required
-@blp.route('/')
+@blp_v1.route('/olib-books')
 class OlibBook(MethodView):
 
     # @jwt_required()
-    @blp.arguments(QueryOlibBookSchema, location='query')
-    @blp.response(201)
+    @blp_v1.arguments(QueryOlibBookSchema, location='query')
+    @blp_v1.response(201)
     def get(self, query_args):
         try:
             asynchronously = query_args.get('asynchronously')
