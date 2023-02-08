@@ -3,7 +3,7 @@ from marshmallow import Schema, fields
 
 class PlainAuthorSchema(Schema):
     class Meta:
-        ordered = True  
+        ordered = True
     id = fields.Int(dump_only=True)
     code = fields.Str(required=True)
 

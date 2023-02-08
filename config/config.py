@@ -12,6 +12,7 @@ class Config:
     API_TITLE = 'BookAPI'
     API_VERSION = 'v1'
     OPENAPI_VERSION = '3.0.2'
+    # Required for ordered=True to work in Schemas Meta classes
     JSON_SORT_KEYS = False
 
 
