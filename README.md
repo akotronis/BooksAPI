@@ -97,8 +97,7 @@ So the endpoints are the below:
 - `/users/register` &rarr; **POST** register a user with `{'username': <username>, 'password': <password>}`
 - `/users/login` &rarr; **POST** login a user with `{'username': <username>, 'password': <password>}`
 - `/users/logout` &rarr; **POST** logout a user
-- `/users/<user_id>` &rarr; **GET** get a user by `user_id`
-- `/users/<user_id>` &rarr; **DELETE** delete a user by `user_id`
+- `/users/<user_id>` &rarr; **GET, DELETE** a user by `user_id`
 
 ### Rules
 
