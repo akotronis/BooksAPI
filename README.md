@@ -94,11 +94,11 @@ So the endpoints are the below:
 
 ### Users
 
-- `/users/register` &rarr; **POST** register a user with with `{'username': <username>, 'password': <password>}`
-- `/works` &rarr; **POST**
-  - Create a work with `{'code': <work_code_str>}`
-- `/works` &rarr; **GET**
-  - Get list of all works in database
+- `/users/register` &rarr; **POST** register a user with `{'username': <username>, 'password': <password>}`
+- `/users/login` &rarr; **POST** login a user with `{'username': <username>, 'password': <password>}`
+- `/users/logout` &rarr; **POST** logout a user
+- `/users/<user_id>` &rarr; **GET** get a user by `user_id`
+- `/users/<user_id>` &rarr; **DELETE** delete a user by `user_id`
 
 ### Rules
 
