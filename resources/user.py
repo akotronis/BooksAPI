@@ -17,21 +17,20 @@ blp_v1 = Blueprint("Users-v1", __name__)
 @blp_v1.route("/users/register")
 class UserRegister(MethodView):
     @blp_v1.arguments(UserSchema)
-    def post(selg, user_data):
+    def post(self, user_data):
         user = UserModel(
                 username=user_data["username"],
-                password=pbkdf2_sha256.hash(user_data["password"]),
+                password=pbkdf2_sha256.hash(user_data["password"])
             )
+        db.session.add(user)
         try:
-            db.session.add(user)
+            db.session.commit()
         except IntegrityError:
             db.session.rollback()
             abort(400, message="A user with this username already exists")
         except:
             db.session.rollback()
             abort(500, message="Could not register user")
-        else:
-            db.session.commit()
         return {"message": "User created succesfully"}, 201
 
 
@@ -73,6 +72,12 @@ class User(MethodView):
     @jwt_required()
     def delete(self, user_id):
         user = UserModel.query.get_or_404(user_id)
-        db.session.delete(user)
-        db.session.commit()
+        if get_jwt()["sub"] != user_id:
+            abort(401, message="User missmatched. Could not delete user")
+        try:
+            db.session.delete(user)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            abort(500, message="Could not delete user")
         return {"message": "User deleted succesfully"}, 200
