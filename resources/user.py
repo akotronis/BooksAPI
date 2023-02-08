@@ -61,6 +61,8 @@ class UserLogout(MethodView):
 
 @blp_v1.route("/users/<int:user_id>")
 class User(MethodView):
+
+    @jwt_required()
     @blp_v1.response(200, UserSchema)
     def get(self, user_id):
         user = UserModel.query.get_or_404(user_id)
@@ -68,6 +70,7 @@ class User(MethodView):
         # user = UserModel.query.with_entities(UserModel.username).filter(UserModel.id==user_id).first()
         return user
 
+    @jwt_required()
     def delete(self, user_id):
         user = UserModel.query.get_or_404(user_id)
         db.session.delete(user)

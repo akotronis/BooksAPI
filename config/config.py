@@ -19,20 +19,22 @@ class Config:
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv('PROD_DATABASE_URL')
     SECRET_KEY = os.getenv('SECRET_KEY')
+    # Required for signing the JWTs
+    # Ensure the JWT received from clients have been generated from the app
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL') or f"sqlite:///{os.path.join(basedir, 'data.db')}"
-    JWT_SECRET_KEY = secrets.token_urlsafe(32)
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY') or secrets.token_urlsafe(32)
     SQLALCHEMY_ECHO = False
 
 
 class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URL') or f"sqlite:///{os.path.join(basedir, 'test-data.db')}"
-    JWT_SECRET_KEY = secrets.token_urlsafe(32)
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY') or secrets.token_urlsafe(32)
     SQLALCHEMY_ECHO = False
 
 
