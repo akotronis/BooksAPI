@@ -24,9 +24,14 @@ class UserRegister(MethodView):
             )
         try:
             db.session.add(user)
-            db.session.commit()
         except IntegrityError:
-            abort(400, message="A user with this username already exists.")
+            db.session.rollback()
+            abort(400, message="A user with this username already exists")
+        except:
+            db.session.rollback()
+            abort(500, message="Could not register user")
+        else:
+            db.session.commit()
         return {"message": "User created succesfully"}, 201
 
 
@@ -34,15 +39,13 @@ class UserRegister(MethodView):
 class UserLogin(MethodView):
     @blp_v1.arguments(UserSchema)
     def post(self, user_data):
-        user = UserModel.query.filter(
-            UserModel.username == user_data["username"]
-        ).first()
+        user = UserModel.query.filter(UserModel.username == user_data["username"]).first()
         if user and pbkdf2_sha256.verify(user_data["password"], user.password):
             access_token = create_access_token(identity=user.id, fresh=True)
             return {
                 "access_token": access_token,
             }
-        abort(401, message="Invalid credentials.")
+        abort(401, message="Invalid credentials")
 
 
 @blp_v1.route("/users/logout")
@@ -51,6 +54,8 @@ class UserLogout(MethodView):
     def post(self):
         jti = get_jwt()["jti"]
         BLOCKLIST.add(jti)
+        print(BLOCKLIST)
+        print(get_jwt())
         return {"message": "Successfully logged out."}
 
 
