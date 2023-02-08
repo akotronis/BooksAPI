@@ -1,6 +1,3 @@
-import uuid
-
-from flask import request
 from flask.views import MethodView
 from flask_jwt_extended import jwt_required
 from flask_smorest import Blueprint, abort
@@ -11,21 +8,22 @@ from models import BookModel, AuthorModel, WorkModel
 from schemas import PlainBookSchema, QueryBookSchema, BookSchema, UpdateBookSchema, BookAndAuthorSchema, BookAndWorkSchema
 
 
-blp = Blueprint("books", __name__, url_prefix='/books')
+blp_v1 = Blueprint("Books-v1", __name__)
+blp_v2 = Blueprint("Books-v2", __name__)
 
 
-@blp.route("/<int:book_id>")
+@blp_v2.route("/books/<int:book_id>")
 class Book(MethodView):
 
     # @jwt_required()
-    @blp.response(200, BookSchema)
+    @blp_v2.response(200, BookSchema)
     def get(self, book_id):
         book = BookModel.query.get_or_404(book_id)
         return book
     
     # @jwt_required()
-    @blp.arguments(UpdateBookSchema)
-    @blp.response(200, BookSchema)
+    @blp_v2.arguments(UpdateBookSchema)
+    @blp_v2.response(200, BookSchema)
     def put(self, book_data, book_id):
         book = BookModel.query.get_or_404(book_id)
         try:
@@ -55,21 +53,17 @@ class Book(MethodView):
         return {"code": 200, "status":"OK"}
 
 
-@blp.route("/")
-class BookList(MethodView):
+@blp_v1.route("/books")
+class BookListV1(MethodView):
     
-    @jwt_required()
-    @blp.arguments(QueryBookSchema, location='query')
-    @blp.response(200, BookSchema(many=True))
-    def get(self, query_args):
-        contain_substring = query_args.get('contains')
-        if contain_substring:
-            return BookModel.query.filter(BookModel.title.contains(contain_substring)).all()
-        return BookModel.query.all()
+    # @jwt_required()
+    @blp_v1.response(200)
+    def get(self):
+        return {'message':'Book Version 1'}
 
     # @jwt_required()
-    @blp.arguments(PlainBookSchema)
-    @blp.response(201, BookSchema)
+    @blp_v1.arguments(PlainBookSchema)
+    @blp_v1.response(201, BookSchema)
     def post(self, book_data):
         try:
             book = BookModel(**book_data)
@@ -82,14 +76,26 @@ class BookList(MethodView):
         return book
 
 
+@blp_v2.route("/books")
+class BookListV2(BookListV1):
+    
+    @jwt_required()
+    @blp_v2.arguments(QueryBookSchema, location='query')
+    @blp_v2.response(200, BookSchema(many=True))
+    def get(self, query_args):
+        contain_substring = query_args.get('contains')
+        if contain_substring:
+            return BookModel.query.filter(BookModel.title.contains(contain_substring)).all()
+        return BookModel.query.all()
 
-@blp.route("/<int:book_id>/authors/<int:author_id>")
+
+@blp_v2.route("/books/<int:book_id>/authors/<int:author_id>")
 class LinkBookToAuthor(MethodView):
     '''(Link a book to an author) Add a row to "books_authors" table
     '''
 
     # @jwt_required()
-    @blp.response(201, BookAndAuthorSchema)
+    @blp_v2.response(201, BookAndAuthorSchema)
     def post(self, book_id, author_id):
         book = BookModel.query.get_or_404(book_id)
         author = AuthorModel.query.get_or_404(author_id)
@@ -106,13 +112,13 @@ class LinkBookToAuthor(MethodView):
         return book
 
 
-@blp.route("/<int:book_id>/works/<int:work_id>")
+@blp_v2.route("/books/<int:book_id>/works/<int:work_id>")
 class LinkBookToWork(MethodView):
     '''(Link a book to a work) Add a row to "books_works" table
     '''
     
     # @jwt_required()
-    @blp.response(201, BookAndWorkSchema)
+    @blp_v2.response(201, BookAndWorkSchema)
     def post(self, book_id, work_id):
         book = BookModel.query.get_or_404(book_id)
         work = WorkModel.query.get_or_404(work_id)

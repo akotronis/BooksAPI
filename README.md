@@ -31,7 +31,7 @@ Implementation with [`flask-sqlalchemy`](https://flask-sqlalchemy.palletsproject
 
 User authentication implemented with [`flask-jwt-extended`](https://flask-jwt-extended.readthedocs.io/en/stable/)
 
-(Currently protected endpoint: `/books` &rarr; **GET**. Uncomment decorator `@jwt_required()` to protect others)
+(Currently protected endpoint: `/books` (and `/v2/books`, see **versioning** below) &rarr; **GET**. Uncomment decorator `@jwt_required()` to protect others)
 
 ## Data transfer validation/(de)serialization
 
@@ -99,6 +99,21 @@ So the endpoints are the below:
   - Create a work with `{'code': <work_code_str>}`
 - `/works` &rarr; **GET**
   - Get list of all works in database
+
+### Rules
+
+- `/rules` &rarr; **GET** returns info about all available endpoints/methods and their versions
+
+## Versioning
+
+Versioning with Blueprints is implemented in file `versioning.py`
+
+- Endpoints with prefix `/v{i}` are exposed for all resources/methods where `{i}` corresponds to the implemented resources/methods versions
+- Endpoints **without** `/v{i}` prefix correspond to the latest implemented versions
+- Implemented versions are:
+  - `v1, v2` for `/books` &rarr; **GET** (so we have `/v1/books` &rarr; **GET** | _unprotected_, and `/v2/books`(=`/books`) &rarr; **GET** | _protected_)
+  - `v1` for all other resources/methods
+- `/rules` has no versions
 
 # Instructions
 

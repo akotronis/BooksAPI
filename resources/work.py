@@ -8,21 +8,21 @@ from models import WorkModel
 from schemas import WorkSchema, UpdateWorkSchema
 
 
-blp = Blueprint("Works", __name__, url_prefix='/works')
+blp_v1 = Blueprint("Works-v1", __name__)
 
 
-@blp.route("/<int:work_id>")
+@blp_v1.route("/works/<int:work_id>")
 class Work(MethodView):
 
     # @jwt_required()
-    @blp.response(200, WorkSchema)
+    @blp_v1.response(200, WorkSchema)
     def get(self, work_id):
         work = WorkModel.query.get_or_404(work_id)
         return work
     
     # @jwt_required()
-    @blp.arguments(UpdateWorkSchema)
-    @blp.response(200, WorkSchema)
+    @blp_v1.arguments(UpdateWorkSchema)
+    @blp_v1.response(200, WorkSchema)
     def put(self, work_data, work_id):
         work = WorkModel.query.get_or_404(work_id)
         try:
@@ -49,17 +49,17 @@ class Work(MethodView):
         return {"code": 200, "status":"OK"}
 
 
-@blp.route("/")
+@blp_v1.route("/works")
 class WorkList(MethodView):
     
     # @jwt_required()
-    @blp.response(200, WorkSchema(many=True))
+    @blp_v1.response(200, WorkSchema(many=True))
     def get(self):
         return WorkModel.query.all()
 
     # @jwt_required()
-    @blp.arguments(WorkSchema)
-    @blp.response(201, WorkSchema)
+    @blp_v1.arguments(WorkSchema)
+    @blp_v1.response(201, WorkSchema)
     def post(self, work_data):
         try:
             work = WorkModel(**work_data)

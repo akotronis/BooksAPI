@@ -11,11 +11,12 @@ from db import db
 
 # Necessary for creating tables
 import models
-from resources.book import blp as BookBlueprint
-from resources.author import blp as AuthorBlueprint
-from resources.work import blp as WorkBlueprint
-from resources.olib_book import blp as OlibBlueprint
-from resources.user import blp as UserBlueprint
+from versioning import register_blueprints
+# from resources.book import blp as BookBlueprint
+# from resources.author import blp as AuthorBlueprint
+# from resources.work import blp as WorkBlueprint
+# from resources.olib_book import blp as OlibBlueprint
+# from resources.user import blp as UserBlueprint
 
 
 def create_app(config_name):
@@ -92,9 +93,5 @@ def create_app(config_name):
         db.create_all() 
 
     # Register Blueprints
-    api.register_blueprint(BookBlueprint)
-    api.register_blueprint(AuthorBlueprint)
-    api.register_blueprint(WorkBlueprint)
-    api.register_blueprint(OlibBlueprint)
-    api.register_blueprint(UserBlueprint)
+    register_blueprints(api)
     return app

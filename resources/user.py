@@ -11,12 +11,12 @@ from models import UserModel
 from schemas import UserSchema
 
 
-blp = Blueprint("Users", __name__, url_prefix='/users', description="Operations on users")
+blp_v1 = Blueprint("Users-v1", __name__)
 
 
-@blp.route("/register")
+@blp_v1.route("/users/register")
 class UserRegister(MethodView):
-    @blp.arguments(UserSchema)
+    @blp_v1.arguments(UserSchema)
     def post(selg, user_data):
         user = UserModel(
                 username=user_data["username"],
@@ -30,9 +30,9 @@ class UserRegister(MethodView):
         return {"message": "User created succesfully"}, 201
 
 
-@blp.route("/login")
+@blp_v1.route("/users/login")
 class UserLogin(MethodView):
-    @blp.arguments(UserSchema)
+    @blp_v1.arguments(UserSchema)
     def post(self, user_data):
         user = UserModel.query.filter(
             UserModel.username == user_data["username"]
@@ -45,7 +45,7 @@ class UserLogin(MethodView):
         abort(401, message="Invalid credentials.")
 
 
-@blp.route("/logout")
+@blp_v1.route("/users/logout")
 class UserLogout(MethodView):
     @jwt_required()
     def post(self):
@@ -54,9 +54,9 @@ class UserLogout(MethodView):
         return {"message": "Successfully logged out."}
 
 
-@blp.route("/<int:user_id>")
+@blp_v1.route("/users/<int:user_id>")
 class User(MethodView):
-    @blp.response(200, UserSchema)
+    @blp_v1.response(200, UserSchema)
     def get(self, user_id):
         user = UserModel.query.get_or_404(user_id)
         # If we want to make sure we don't send password to Schema in the first place:

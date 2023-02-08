@@ -8,21 +8,21 @@ from models import AuthorModel
 from schemas import AuthorSchema, UpdateAuthorSchema
 
 
-blp = Blueprint("Authors", __name__, url_prefix='/authors')
+blp_v1 = Blueprint("Authors-v1", __name__)
 
 
-@blp.route("/<int:author_id>")
+@blp_v1.route("/authors/<int:author_id>")
 class Author(MethodView):
 
     # @jwt_required()
-    @blp.response(200, AuthorSchema)
+    @blp_v1.response(200, AuthorSchema)
     def get(self, author_id):
         author = AuthorModel.query.get_or_404(author_id)
         return author
     
     # @jwt_required()
-    @blp.arguments(UpdateAuthorSchema)
-    @blp.response(200, AuthorSchema)
+    @blp_v1.arguments(UpdateAuthorSchema)
+    @blp_v1.response(200, AuthorSchema)
     def put(self, author_data, author_id):
         author = AuthorModel.query.get_or_404(author_id)
         try:
@@ -49,17 +49,17 @@ class Author(MethodView):
         return {"code": 200, "status":"OK"}
 
 
-@blp.route("/")
+@blp_v1.route("/authors")
 class AuthorList(MethodView):
     
     # @jwt_required()
-    @blp.response(200, AuthorSchema(many=True))
+    @blp_v1.response(200, AuthorSchema(many=True))
     def get(self):
         return AuthorModel.query.all()
 
     # @jwt_required()
-    @blp.arguments(AuthorSchema)
-    @blp.response(201, AuthorSchema)
+    @blp_v1.arguments(AuthorSchema)
+    @blp_v1.response(201, AuthorSchema)
     def post(self, author_data):
         try:
             author = AuthorModel(**author_data)

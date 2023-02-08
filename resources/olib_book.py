@@ -8,7 +8,7 @@ from populate import FeedDB
 from schemas import QueryOlibBookSchema
 
 
-blp_v1 = Blueprint("Openlib-books-v1", __name__)
+blp_v1 = Blueprint("OlibBooks-v1", __name__)
 
 # @jwt_required
 @blp_v1.route('/olib-books')
