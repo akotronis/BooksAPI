@@ -40,6 +40,7 @@ class UserLogin(MethodView):
     def post(self, user_data):
         user = UserModel.query.filter(UserModel.username == user_data["username"]).first()
         if user and pbkdf2_sha256.verify(user_data["password"], user.password):
+            # user.id is stored as value of 'sub' key in JWT payload claims
             access_token = create_access_token(identity=user.id, fresh=True)
             return {
                 "access_token": access_token,
@@ -53,8 +54,6 @@ class UserLogout(MethodView):
     def post(self):
         jti = get_jwt()["jti"]
         BLOCKLIST.add(jti)
-        print(BLOCKLIST)
-        print(get_jwt())
         return {"message": "Successfully logged out."}
 
 

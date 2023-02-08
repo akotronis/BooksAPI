@@ -37,7 +37,10 @@ def create_app(config_name):
 
     ################### JWT CONFIGURATION ###################
 
-    # Check if token is in blocklist (=Used tokens, from logged out users). Runs when token is CREATED
+    # There may be shared computers in which case we might want to keep tokens ('jti' key from JWT claims) after logging out
+    # in a BLOCKLIST so that they can't be used for re-logging in from a potentially different person
+    # Check if token is in BLOCKLIST. If returns true, error message is sent. Runs when token is CREATED
+    # Use it with persistent storage
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
         return jwt_payload["jti"] in BLOCKLIST
@@ -61,7 +64,7 @@ def create_app(config_name):
     # Add custom claims. Runs when token is CREATED
     @jwt.additional_claims_loader
     def add_claims_to_jwt(identity):
-        # Look in database to see if user is an admin instead :-)
+        # Example: (Look in database to see if user is an admin instead)
         if identity == 1:
             return {"is_admin": True}
         return {"is_admin": False}
