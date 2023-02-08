@@ -64,6 +64,8 @@ class User(MethodView):
     @jwt_required()
     @blp_v1.response(200, UserSchema)
     def get(self, user_id):
+        if get_jwt()["sub"] != user_id:
+            abort(401, message="User missmatched. Could not get user")
         user = UserModel.query.get_or_404(user_id)
         # If we want to make sure we don't send password to Schema in the first place:
         # user = UserModel.query.with_entities(UserModel.username).filter(UserModel.id==user_id).first()
