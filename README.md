@@ -136,8 +136,8 @@ With Docker (Desktop) installed, on the folder where `Dockerfile` is:
 
 In root folder:
 
--
-- `>>> pytest --strict-markers -m <marker-name> -s` where `marker-name` s can be found in `pytest.ini` file
+- `>>> pytest -s` to run all tests
+- `>>> pytest --strict-markers -m <marker-name> -s` to run tests by marker, where `marker-name` s can be found in `pytest.ini` file
 
 # TODO
 
