@@ -135,7 +135,8 @@ With Docker (Desktop) installed, on the folder where `Dockerfile` is:
 # Instructions (Test)
 
 In root folder:
-- 
+
+-
 - `>>> pytest --strict-markers -m <marker-name> -s` where `marker-name` s can be found in `pytest.ini` file
 
 # TODO
@@ -144,4 +145,4 @@ In root folder:
 - Documentation with `flask-smorest/swagger`
 - Use `flask-migrate` for migrations
 - Use `gunicorn` as a server
-- Unit testing
+- Unit testing &check;
