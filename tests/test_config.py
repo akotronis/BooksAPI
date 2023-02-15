@@ -30,6 +30,6 @@ def test_testing_config(app):
     app.config.from_object(config_by_name['test'])
     assert not app.config['DEBUG']
     assert app.config['TESTING']
-    assert app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DEV_DATABASE_URL') or f"sqlite:///{os.path.join(basedir, 'test-data.db')}"
+    assert app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('TEST_DATABASE_URL') or f"sqlite:///{os.path.join(basedir, 'test-data.db')}"
 
 
