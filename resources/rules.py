@@ -1,8 +1,6 @@
 from flask import current_app as app
 from flask_smorest import Blueprint
 
-from flask_smorest import Blueprint
-
 
 blp_rules = Blueprint("Rules", __name__)
 
