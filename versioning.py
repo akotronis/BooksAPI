@@ -28,4 +28,4 @@ def register_blueprints(api):
     api.register_blueprint(OlibBlueprint_v1, url_prefix='/', name='OlibBooks-latest')
 
     api.register_blueprint(UserBlueprint_v1, url_prefix='/v1')
-    api.register_blueprint(UserBlueprint_v1, url_prefix='/', name='UserBlueprint-latest')
+    api.register_blueprint(UserBlueprint_v1, url_prefix='/', name='Users-latest')
